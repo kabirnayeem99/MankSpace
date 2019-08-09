@@ -1,0 +1,53 @@
+from django.db import models
+from django.urls import reverse
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+# We will use class-based views, as it makes code more readable and 
+# gives less hassle (kabir)
+#
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
+
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE
+    )
+    body = models.TextField()
+
+    def __str__(self): # This will show post title along with its author (kabir)
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)]) # Will return to new created post
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(
+        BlogPost,
+        on_delete=models.CASCADE,
+        related_name = 'comments',
+    )
+    comment = models.CharField(max_length=439)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete = models.CASCADE
+    )
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse('post_list')
