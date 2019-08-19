@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 
 class Category(models.Model):
     name = models.CharField(max_length=60)
+    category_cover = models.CharField(max_length=60)
 
     def __str__(self):
         return self.name
@@ -21,6 +22,7 @@ class BlogPost(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
+    date = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE
@@ -38,7 +40,7 @@ class Comment(models.Model):
     article = models.ForeignKey(
         BlogPost,
         on_delete=models.CASCADE,
-        related_name = 'comments',
+        related_name='comments',
     )
     comment = models.CharField(max_length=439)
     author = models.ForeignKey(

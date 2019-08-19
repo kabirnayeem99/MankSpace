@@ -10,14 +10,14 @@ from django.views.generic.edit import (
     DeleteView,
 )
 
-from .models import BlogPost
+from .models import BlogPost, Category
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 
 
 class PostListView(ListView):
-    model = BlogPost
+    model = Category
     template_name = 'post_list.html'
 
 
