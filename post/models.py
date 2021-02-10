@@ -3,15 +3,15 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-# We will use class-based views, as it makes code more readable and 
-# gives less hassle (kabir)
-#
-
 
 class Category(models.Model):
+    # Category class which contains
+    # name of the category 
+    # and cover page of the category
     name = models.CharField(max_length=60)
     category_cover = models.CharField(max_length=60)
 
+    # Constructor will only take the name of the category
     def __str__(self):
         return self.name
 
